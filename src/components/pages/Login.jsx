@@ -11,22 +11,10 @@ class Login extends React.Component {
       email: '',
       name: '',
       token: '',
-      src: '',
+      imagem: '',
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
-  }
-
-  fetchAPI = async () => {
-    const { email } = this.props;
-    const hash = md5(email).toString();
-    console.log(email);
-    console.log(hash);
-    const curr = `https://www.gravatar.com/avatar/${hash}`;
-    const response = await fetch(curr);
-    const json = await response;
-    const src = json.url;
-    this.setState({ src });
   }
 
   async handleClick() {
@@ -36,9 +24,16 @@ class Login extends React.Component {
     const json = await response.json();
     localStorage.setItem('token', JSON.stringify(json.token));
 
+    const { email } = this.state;
+    const hash = md5(email).toString();
+    const curre = `https://www.gravatar.com/avatar/${hash}`;
+    const responses = await fetch(curre);
+    const jsons = await responses;
+    const src = jsons.url;
+
     this.setState({
       token: json.token,
-      src,
+      imagem: src,
     });
     history.push('/playGame');
     saveToken(this.state);
