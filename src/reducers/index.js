@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import email from './email';
+import player from './player';
 
-const rootReducer = combineReducers({ email });
+const rootReducer = combineReducers({ player });
 
 export default rootReducer;
