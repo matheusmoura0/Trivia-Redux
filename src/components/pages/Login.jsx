@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import md5 from 'crypto-js/md5';
 import React from 'react';
 import { connect } from 'react-redux';
 import { tokenAction } from '../../actions';
@@ -10,15 +11,22 @@ class Login extends React.Component {
       email: '',
       name: '',
       token: '',
+      src: '',
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleChange({ target: { value, name } }) {
-    this.setState({
-      [name]: value,
-    });
+  fetchAPI = async () => {
+    const { email } = this.props;
+    const hash = md5(email).toString();
+    console.log(email);
+    console.log(hash);
+    const curr = `https://www.gravatar.com/avatar/${hash}`;
+    const response = await fetch(curr);
+    const json = await response;
+    const src = json.url;
+    this.setState({ src });
   }
 
   async handleClick() {
@@ -27,11 +35,19 @@ class Login extends React.Component {
     const response = await fetch(curr);
     const json = await response.json();
     localStorage.setItem('token', JSON.stringify(json.token));
+
     this.setState({
       token: json.token,
+      src,
     });
     history.push('/playGame');
     saveToken(this.state);
+  }
+
+  handleChange({ target: { value, name } }) {
+    this.setState({
+      [name]: value,
+    });
   }
 
   render() {
