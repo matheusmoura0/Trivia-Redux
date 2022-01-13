@@ -5,6 +5,7 @@ import Login from './components/pages/Login';
 import './App.css';
 import PlayGame from './components/pages/PlayGame';
 import Header from './components/pages/Header';
+import Config from './components/pages/Config';
 
 export default function App() {
   return (
@@ -13,6 +14,8 @@ export default function App() {
         <Route exact path="/" component={ Login } />
         <Route path="/header" component={ Header } />
         <Route path="/playGame" component={ PlayGame } />
+        <Route path="/config" component={ Config } />
+
       </Switch>
     </div>
   );

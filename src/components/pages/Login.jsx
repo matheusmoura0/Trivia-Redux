@@ -37,6 +37,7 @@ class Login extends React.Component {
   render() {
     const regexEmail = /\S+@\S+\.\S+/;
     const { email, name } = this.state;
+    const { history } = this.props;
     const validEmail = regexEmail.test(email);
     return (
       <div>
@@ -71,6 +72,13 @@ class Login extends React.Component {
           type="button"
         >
           Jogar
+        </button>
+        <button
+          onClick={ () => { history.push('/config'); } }
+          data-testid="btn-settings"
+          type="button"
+        >
+          Configurar
         </button>
       </div>
     );
