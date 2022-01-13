@@ -48,7 +48,7 @@ class Login extends React.Component {
           />
         </label>
         <button
-          disabled={ !validEmail }
+          disabled={ (!validEmail || name.length === 0) }
           onClick={ this.handleClick }
           data-testid="btn-play"
           type="button"
