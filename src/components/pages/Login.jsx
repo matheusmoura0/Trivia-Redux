@@ -1,4 +1,7 @@
+import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
+import { tokenAction } from '../../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -6,15 +9,29 @@ class Login extends React.Component {
     this.state = {
       email: '',
       name: '',
-
+      token: '',
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange({ target: { value, name } }) {
     this.setState({
       [name]: value,
     });
+  }
+
+  async handleClick() {
+    const { history, saveToken } = this.props;
+    const curr = 'https://opentdb.com/api_token.php?command=request';
+    const response = await fetch(curr);
+    const json = await response.json();
+    localStorage.setItem('token', JSON.stringify(json.token));
+    this.setState({
+      token: json.token,
+    });
+    history.push('/playGame');
+    saveToken(this.state);
   }
 
   render() {
@@ -60,4 +77,15 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }),
+  saveToken: PropTypes.func,
+}.isRequired;
+
+const mapDispatchToProps = (dispacth) => ({
+  saveToken: (payload) => dispacth(tokenAction(payload)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
