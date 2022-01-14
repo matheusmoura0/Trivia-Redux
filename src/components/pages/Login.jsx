@@ -10,7 +10,7 @@ class Login extends React.Component {
       email: '',
       name: '',
       token: '',
-      avatar: '',
+      questions: '',
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
