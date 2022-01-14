@@ -21,7 +21,7 @@ class Header extends Component {
         <img
           src={ `https://www.gravatar.com/avatar/${MD5}` }
           data-testid="header-profile-picture"
-          alt="avatar"
+          alt="avatarPlayer"
         />
       </div>
     );
