@@ -1,4 +1,3 @@
-import md5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -17,43 +16,25 @@ class Login extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  /*   getAvatar = async () => {
-    const { saveToken } = this.props;
-    const { email } = this.state;
-    const hash = md5(email).toString();
-    const curr = `https://www.gravatar.com/avatar/${hash}`;
-    const response = await fetch(curr);
-    const src = response.url;
-    this.setState({
-      avatar: src,
-    });
-    saveToken(this.state);
-  } */
-
-  handleChange({ target: { value, name } }) {
-    this.setState({
-      [name]: value,
-    });
-  }
-
   async handleClick() {
     const { history, saveToken, savePlayer } = this.props;
-    const { email } = this.state;
     const curr = 'https://opentdb.com/api_token.php?command=request';
     const response = await fetch(curr);
     const json = await response.json();
     localStorage.setItem('token', JSON.stringify(json.token));
-    const hash = md5(email).toString();
-    const curry = `https://www.gravatar.com/avatar/${hash}`;
-    const responsy = await fetch(curry);
-    const src = responsy.url;
+
     this.setState({
       token: json.token,
-      avatar: src,
     }, () => {
       savePlayer(this.state);
       saveToken(this.state);
       history.push('/playGame');
+    });
+  }
+
+  handleChange({ target: { value, name } }) {
+    this.setState({
+      [name]: value,
     });
   }
 
