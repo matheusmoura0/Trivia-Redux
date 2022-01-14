@@ -1,4 +1,3 @@
-import md5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -17,24 +16,25 @@ class Login extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleChange({ target: { value, name } }) {
-    this.setState({
-      [name]: value,
-    });
-  }
-
   async handleClick() {
     const { history, saveToken, savePlayer } = this.props;
     const curr = 'https://opentdb.com/api_token.php?command=request';
     const response = await fetch(curr);
     const json = await response.json();
     localStorage.setItem('token', JSON.stringify(json.token));
+
     this.setState({
       token: json.token,
     }, () => {
       savePlayer(this.state);
       saveToken(this.state);
       history.push('/playGame');
+    });
+  }
+
+  handleChange({ target: { value, name } }) {
+    this.setState({
+      [name]: value,
     });
   }
 
