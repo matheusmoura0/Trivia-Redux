@@ -1,4 +1,4 @@
-import { connect } from 'react-redux';
+/* import { connect } from 'react-redux';
 
 const fetchTrivia = async () => {
   const { token } = this.props;
@@ -13,3 +13,4 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps)(fetchTrivia);
+ */

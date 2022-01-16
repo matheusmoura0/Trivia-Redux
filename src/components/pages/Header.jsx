@@ -16,8 +16,12 @@ class Header extends Component {
 
     return (
       <div>
-        <p data-testid="header-score">0</p>
-        <p data-testid="header-player-name">{player.name}</p>
+        <p data-testid="header-player-name">
+          Player:
+          {' '}
+          {player.name}
+        </p>
+        <p data-testid="header-score">Score: 0</p>
         <img
           src={ `https://www.gravatar.com/avatar/${MD5}` }
           data-testid="header-profile-picture"

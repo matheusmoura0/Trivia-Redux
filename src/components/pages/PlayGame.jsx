@@ -10,7 +10,7 @@ class PlayGame extends Component {
     this.state = {
       played: false,
       question: '',
-      arraySortedAlternatives: [],
+      arrayAnswers: [],
     };
   }
 
@@ -20,21 +20,23 @@ class PlayGame extends Component {
 
   getQuestions = async () => {
     const { token } = this.props;
-    console.log(token);
     const curr = `https://opentdb.com/api.php?amount=5&token=${token}`;
     const response = await fetch(curr);
     const questionsObjt = await response.json();
+    const qAndA = questionsObjt.results[0];
     this.setState({
-      question: questionsObjt.results[0],
+      question: qAndA,
       played: true,
-      arraySortedAlternatives: [...questionsObjt.results[0].incorrect_answers,
-        questionsObjt.results[0].correct_answer],
+      arrayAnswers: [...qAndA.incorrect_answers,
+        qAndA.correct_answer],
     });
   };
 
   render() {
-    const { question, played, arraySortedAlternatives } = this.state;
-    console.log(question, arraySortedAlternatives);
+    const { question, played, arrayAnswers } = this.state;
+    console.log(arrayAnswers);
+    console.log(question);
+
     const magicNumber = 0.4;
     return (
       <div>
@@ -55,17 +57,16 @@ class PlayGame extends Component {
               <p
                 data-testid="answer-options"
               >
-                {arraySortedAlternatives
+                {arrayAnswers
                   .sort(() => Math
                     .random() - magicNumber)
                   .map((el, i) => (
                     <button
                       type="button"
                       key={ i }
-                      data-testid={ `wrong-answer-${i}` }
+                      data-testid={ el === question.correct_answer ? 'correct-answer' : `wrong-answer-${i}` }
                     >
                       {el}
-
                     </button>
                   ))}
               </p>
