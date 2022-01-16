@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from './Header';
 
+const magicNumber = 0.4;
+
 class PlayGame extends Component {
   constructor() {
     super();
@@ -11,12 +13,15 @@ class PlayGame extends Component {
       played: false,
       question: '',
       arrayAnswers: [],
-      seconds: 0,
+      seconds: 30,
+      disabledbutton: false,
+      clicked: false,
     };
   }
 
   componentDidMount() {
     this.getQuestions();
+    this.timer();
   }
 
   getQuestions = async () => {
@@ -29,27 +34,30 @@ class PlayGame extends Component {
       question: qAndA,
       played: true,
       arrayAnswers: [...qAndA.incorrect_answers,
-        qAndA.correct_answer],
+        qAndA.correct_answer].sort(() => Math.random() - magicNumber),
     });
   };
 
-  onStart=() => {
-    this.setState((prevState) => ({
-      seconds: prevState + 1,
-    }));
-  }
-
   timer = () => {
-    console.log('entrou');
-    const magicNumber = 1000;
-    // const buttons = document.querySelectorAll('.buttonAnswer');
-    setInterval(this.onStart, magicNumber);
-    // buttons.disabled = false;
+    const magicNumbertimer = 1000;
+    const timerzin = setInterval(() => {
+      const { seconds, clicked } = this.state;
+      if (seconds === 0 || clicked === true) {
+        this.setState({
+          disabledbutton: true,
+        });
+        this.colorize();
+        return clearInterval(timerzin);
+      }
+      this.setState({ seconds: seconds - 1 });
+    }, magicNumbertimer);
   }
-  // terminar esta funcao...
 
   colorize() {
     const buttons = document.querySelectorAll('.buttonAnswer');
+    this.setState({
+      clicked: true,
+    });
     buttons.forEach((button) => {
       const testId = button.getAttribute('data-testid');
       if (testId === 'correct-answer') {
@@ -61,9 +69,8 @@ class PlayGame extends Component {
   }
 
   render() {
-    const { question, played, arrayAnswers, seconds } = this.state;
+    const { question, played, arrayAnswers, seconds, disabledbutton } = this.state;
 
-    const magicNumber = 0.4;
     return (
       <div>
         <Header />
@@ -84,10 +91,9 @@ class PlayGame extends Component {
                 data-testid="answer-options"
               >
                 {arrayAnswers
-                  .sort(() => Math
-                    .random() - magicNumber)
                   .map((el, i) => (
                     <button
+                      disabled={ disabledbutton }
                       className="buttonAnswer"
                       type="button"
                       key={ i }
