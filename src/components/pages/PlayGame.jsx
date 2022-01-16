@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { queryByRole } from '@testing-library/react';
 import Header from './Header';
 
 class PlayGame extends Component {
@@ -32,10 +33,20 @@ class PlayGame extends Component {
     });
   };
 
+  colorize() {
+    const buttons = document.querySelectorAll('.buttonAnswer');
+    buttons.forEach((button) => {
+      const testId = button.getAttribute('data-testid');
+      if (testId === 'correct-answer') {
+        button.style.border = '3px solid rgb(6, 240, 15)';
+      } else {
+        button.style.border = '3px solid rgb(255, 0, 0)';
+      }
+    });
+  }
+
   render() {
     const { question, played, arrayAnswers } = this.state;
-    console.log(arrayAnswers);
-    console.log(question);
 
     const magicNumber = 0.4;
     return (
@@ -62,9 +73,12 @@ class PlayGame extends Component {
                     .random() - magicNumber)
                   .map((el, i) => (
                     <button
+                      className="buttonAnswer"
                       type="button"
                       key={ i }
-                      data-testid={ el === question.correct_answer ? 'correct-answer' : `wrong-answer-${i}` }
+                      data-testid={ el === question
+                        .correct_answer ? 'correct-answer' : `wrong-answer-${i}` }
+                      onClick={ () => this.colorize() }
                     >
                       {el}
                     </button>
