@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { queryByRole } from '@testing-library/react';
 import Header from './Header';
 
 class PlayGame extends Component {
@@ -12,6 +11,7 @@ class PlayGame extends Component {
       played: false,
       question: '',
       arrayAnswers: [],
+      seconds: 0,
     };
   }
 
@@ -33,6 +33,21 @@ class PlayGame extends Component {
     });
   };
 
+  onStart=() => {
+    this.setState((prevState) => ({
+      seconds: prevState + 1,
+    }));
+  }
+
+  timer = () => {
+    console.log('entrou');
+    const magicNumber = 1000;
+    // const buttons = document.querySelectorAll('.buttonAnswer');
+    setInterval(this.onStart, magicNumber);
+    // buttons.disabled = false;
+  }
+  // terminar esta funcao...
+
   colorize() {
     const buttons = document.querySelectorAll('.buttonAnswer');
     buttons.forEach((button) => {
@@ -46,7 +61,7 @@ class PlayGame extends Component {
   }
 
   render() {
-    const { question, played, arrayAnswers } = this.state;
+    const { question, played, arrayAnswers, seconds } = this.state;
 
     const magicNumber = 0.4;
     return (
@@ -83,6 +98,14 @@ class PlayGame extends Component {
                       {el}
                     </button>
                   ))}
+                {/* chamar esta funcao junto com o map das alternativas {this.timer()}
+ */}
+              </p>
+              <p
+                id="timer"
+              >
+                Timer:
+                {seconds}
               </p>
             </div>)}
       </div>
