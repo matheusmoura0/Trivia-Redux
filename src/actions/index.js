@@ -18,7 +18,7 @@ export const setScore = (payload) => ({
   payload,
 });
 
-export const setRanking = (payload) => ({
+export const setNewScore = (payload) => ({
   type: SET_SCORE_RANKING,
   payload,
 });

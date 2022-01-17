@@ -1,4 +1,4 @@
-import { SET_EMAIL_ACTION, SET_SCORE_ACTION } from '../actions';
+import { SET_EMAIL_ACTION, SET_SCORE_ACTION, SET_SCORE_RANKING } from '../actions';
 
 const INITIAL_STATE = {
   score: 0,
@@ -17,6 +17,8 @@ function player(state = INITIAL_STATE, action) {
       score: state.score + action.payload.score,
       assertions: state.assertions + action.payload.assertions,
     };
+  case SET_SCORE_RANKING:
+    return INITIAL_STATE;
   default:
     return state;
   }

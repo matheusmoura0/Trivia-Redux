@@ -2,16 +2,19 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
-
-// import Header from './Header';
+import { setNewScore } from '../../actions';
 
 class Feedback extends Component {
   handleClick = () => {
+    const { setinferno, player } = this.props;
+    setinferno(player.score);
     const { history } = this.props;
     history.push('/');
   };
 
   handleClick2 = () => {
+    const { setinferno, player } = this.props;
+    setinferno(player.score);
     const { history } = this.props;
     history.push('/ranking');
   }
@@ -78,6 +81,7 @@ Feedback.propTypes = {
   score: PropTypes.func.isRequired,
   assertion: PropTypes.func.isRequired,
   player: PropTypes.func.isRequired,
+  setinferno: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -85,5 +89,8 @@ const mapStateToProps = (state) => ({
   score: state.player.score,
   assertion: state.player.assertions,
 });
+const mapDispatchToProps = (dispacth) => ({
+  setinferno: (payload) => dispacth(setNewScore(payload)),
+});
 
-export default connect(mapStateToProps)(Feedback);
+export default connect(mapStateToProps, mapDispatchToProps)(Feedback);
