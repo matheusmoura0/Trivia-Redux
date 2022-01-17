@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Header from './Header';
 
 export default class Feedback extends Component {
   render() {
@@ -6,7 +7,8 @@ export default class Feedback extends Component {
       <div
         data-testid="feedback-text"
       >
-        lalala
+        FeedBack
+        <Header />
       </div>
     );
   }

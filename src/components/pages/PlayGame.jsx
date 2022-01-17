@@ -6,7 +6,7 @@ import { setScore } from '../../actions';
 
 const magicNumber = 0.4;
 const ifNumber = 3;
-const CORRECT_ANSWER = 'correct_answer';
+const CORRECT_ANSWER = 'correct-answer';
 
 class PlayGame extends Component {
   constructor() {
@@ -179,17 +179,18 @@ class PlayGame extends Component {
                         .correct_answer ? CORRECT_ANSWER : `wrong-answer-${i}` }
                     >
                       {el}
+
                     </button>
                   ))}
-                <button
-                  hidden={ !disabledbutton }
-                  onClick={ this.nextQuestion }
-                  type="button"
-                  data-testid="btn-next"
-                >
-                  Next
-                </button>
               </div>
+              <button
+                hidden={ !disabledbutton }
+                onClick={ this.nextQuestion }
+                type="button"
+                data-testid="btn-next"
+              >
+                Next
+              </button>
               <p
                 id="timer"
               >

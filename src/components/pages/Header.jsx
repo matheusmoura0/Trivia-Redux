@@ -11,7 +11,7 @@ class Header extends Component {
   }
 
   render() {
-    const { player, score } = this.props;
+    const { player, score, assertion } = this.props;
     const MD5 = md5(player.email).toString();
 
     return (
@@ -22,9 +22,13 @@ class Header extends Component {
           {player.name}
         </p>
         <p data-testid="header-score">
-          Score:
-          {' '}
           {score}
+        </p>
+        <p data-testid="feedback-text">
+          {assertion < +'3'
+            ? 'Could be better...'
+            : 'Well Done!'}
+
         </p>
         <img
           src={ `https://www.gravatar.com/avatar/${MD5}` }
@@ -39,6 +43,7 @@ class Header extends Component {
 const mapStateToProps = (state) => ({
   player: state.player,
   score: state.player.score,
+  assertion: state.player.assertions,
 });
 
 Header.propTypes = {
