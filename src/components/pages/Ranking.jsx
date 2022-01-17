@@ -4,7 +4,7 @@ export default class ranking extends Component {
   render() {
     return (
       <div
-        data-test-id="ranking-title"
+        data-testid="ranking-title"
       >
         RAKING
       </div>
