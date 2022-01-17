@@ -6,15 +6,15 @@ import { setNewScore } from '../../actions';
 
 class Feedback extends Component {
   handleClick = () => {
-    const { setinferno, player } = this.props;
-    setinferno(player.score);
+    const { resetScore, player } = this.props;
+    resetScore(player.score);
     const { history } = this.props;
     history.push('/');
   };
 
-  handleClick2 = () => {
-    const { setinferno, player } = this.props;
-    setinferno(player.score);
+  sendToRanking = () => {
+    const { resetScore, player } = this.props;
+    resetScore(player.score);
     const { history } = this.props;
     history.push('/ranking');
   }
@@ -66,7 +66,7 @@ class Feedback extends Component {
         </p>
 
         <button
-          onClick={ this.handleClick2 }
+          onClick={ this.sendToRanking }
           type="button"
           data-testid="btn-ranking"
         >
@@ -81,7 +81,7 @@ Feedback.propTypes = {
   score: PropTypes.func.isRequired,
   assertion: PropTypes.func.isRequired,
   player: PropTypes.func.isRequired,
-  setinferno: PropTypes.func.isRequired,
+  resetScore: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -90,7 +90,7 @@ const mapStateToProps = (state) => ({
   assertion: state.player.assertions,
 });
 const mapDispatchToProps = (dispacth) => ({
-  setinferno: (payload) => dispacth(setNewScore(payload)),
+  resetScore: (payload) => dispacth(setNewScore(payload)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Feedback);

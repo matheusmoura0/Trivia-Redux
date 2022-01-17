@@ -16,9 +16,8 @@ class Ranking extends Component {
   };
 
   render() {
-    const lalala = Object.values(localStorage)
+    const sortedLocalStorage = Object.values(localStorage)
       .sort((a, b) => JSON.parse(b).score - JSON.parse(a).score);
-    console.log(lalala);
     return (
       <div>
         <p
@@ -33,7 +32,7 @@ class Ranking extends Component {
           Go home
         </button>
         <ol>
-          {lalala.map((score, index) => (
+          {sortedLocalStorage.map((score, index) => (
             <div key={ index }>
               <img
                 src={ `https://www.gravatar.com/avatar/${md5(JSON.parse(score).email).toString()}` }
