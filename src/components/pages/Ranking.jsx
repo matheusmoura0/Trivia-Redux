@@ -15,6 +15,7 @@ export default class Ranking extends Component {
         />
         RAKING
         <button
+          onClick={ this.handleClick }
           type="button"
           data-testid="btn-go-home"
         >
