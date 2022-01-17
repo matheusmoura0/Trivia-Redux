@@ -11,8 +11,8 @@ export default function App() {
   return (
     <div className="App">
       <Switch>
-        <Route path="/feedback" component={ Feedback } />
         <Route exact path="/" component={ Login } />
+        <Route path="/feedback" component={ Feedback } />
         <Route path="/playGame" component={ PlayGame } />
         <Route path="/config" component={ Config } />
 
