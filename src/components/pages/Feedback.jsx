@@ -23,6 +23,12 @@ class Feedback extends Component {
       <div
         data-testid="feedback-text"
       >
+        <p data-testid="header-player-name">
+          { player.name }
+        </p>
+        <p data-testid="header-score">
+          {score}
+        </p>
         <img
           src={ `https://www.gravatar.com/avatar/${MD5}` }
           data-testid="header-profile-picture"
