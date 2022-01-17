@@ -18,19 +18,17 @@ class Login extends React.Component {
 
   async handleClick() {
     const { history, saveToken, savePlayer } = this.props;
-    // const { player: { score } } = this.props;
     const curr = 'https://opentdb.com/api_token.php?command=request';
     const response = await fetch(curr);
     const json = await response.json();
     localStorage.setItem(localStorage.length + 1, JSON.stringify(json.token));
-    // setScores(score: score '-');
     this.setState({
       token: json.token,
     }, () => {
       savePlayer(this.state);
       saveToken(this.state);
-      history.push('/playGame');
     });
+    history.push('/playGame');
   }
 
   handleChange({ target: { value, name } }) {

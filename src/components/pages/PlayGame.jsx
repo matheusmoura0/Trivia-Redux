@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from './Header';
-import { setScore } from '../../actions';
+import { setScore, tokenAction } from '../../actions';
 
 const magicNumber = 0.4;
 const ifNumber = 3;
@@ -36,26 +36,28 @@ class PlayGame extends Component {
     }
   }
 
-   newQuest = () => {
-     const { question, current } = this.state;
-     const teste = question[current];
-     this.setState({
-       arrayAnswers: [...teste.incorrect_answers,
-         teste.correct_answer].sort(() => Math.random() - magicNumber),
-       disabledbutton: false,
-       seconds: 30,
-       clicked: false,
-     });
-     this.timer();
-   }
+  async getQuestionsAgain() {
+    const { saveToken } = this.props;
+    const curr = 'https://opentdb.com/api_token.php?command=request';
+    const response = await fetch(curr);
+    const json = await response.json();
+    localStorage.setItem(localStorage.length + 1, JSON.stringify(json.token));
+    this.setState({
+      token: json.token,
+    }, () => {
+      saveToken(this.state);
+    });
+  }
 
   getQuestions = async () => {
     const { current } = this.state;
     const { token } = this.props;
+    console.log(token);
     const curr = `https://opentdb.com/api.php?amount=5&token=${token}`;
     const response = await fetch(curr);
     const questionsObjt = await response.json();
     const qAndA = questionsObjt.results[current];
+    console.log(questionsObjt);
     this.setState({
       question: questionsObjt.results,
       played: true,
@@ -63,6 +65,19 @@ class PlayGame extends Component {
         qAndA.correct_answer].sort(() => Math.random() - magicNumber),
     });
   };
+
+  newQuest = () => {
+    const { question, current } = this.state;
+    const teste = question[current];
+    this.setState({
+      arrayAnswers: [...teste.incorrect_answers,
+        teste.correct_answer].sort(() => Math.random() - magicNumber),
+      disabledbutton: false,
+      seconds: 30,
+      clicked: false,
+    });
+    this.timer();
+  }
 
   diffNumber = () => {
     const { question } = this.state;
@@ -217,13 +232,15 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispacth) => ({
   setScores: (payload) => dispacth(setScore(payload)),
+  saveToken: (payload) => dispacth(tokenAction(payload)),
 });
 
 PlayGame.propTypes = {
-  token: PropTypes.func.isRequired,
-  setScores: PropTypes.func.isRequired,
   history: PropTypes.func.isRequired,
   player: PropTypes.func.isRequired,
+  saveToken: PropTypes.func.isRequired,
+  setScores: PropTypes.func.isRequired,
+  token: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlayGame);
