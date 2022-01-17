@@ -21,7 +21,7 @@ class Login extends React.Component {
     const curr = 'https://opentdb.com/api_token.php?command=request';
     const response = await fetch(curr);
     const json = await response.json();
-    localStorage.setItem('token', JSON.stringify(json.token));
+    localStorage.setItem(localStorage.length + 1, JSON.stringify(json.token));
 
     this.setState({
       token: json.token,
