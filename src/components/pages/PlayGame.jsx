@@ -85,16 +85,11 @@ class PlayGame extends Component {
   }
 
    somaPontos = () => {
-     const { setScores, player } = this.props;
+     const { setScores } = this.props;
      const { seconds } = this.state;
      const points = +'10' + (this.diffNumber() * seconds);
      setScores({ score: points, assertions: 1 });
-     localStorage.setItem(localStorage.length, JSON.stringify({
-       scores: points,
-       email: player.email,
-       name: player.name,
-     }));
-   }
+   };
 
    stopWatch = (timerzin) => clearInterval(timerzin);
 
@@ -114,7 +109,7 @@ class PlayGame extends Component {
 
   nextQuestion = () => {
     const { current, question } = this.state;
-    const { history } = this.props;
+    const { history, player } = this.props;
     if (current === question.length - 1) {
       history.push('./feedback');
     } else {
@@ -122,6 +117,11 @@ class PlayGame extends Component {
         current: current + 1,
       });
     }
+    localStorage.setItem(localStorage.length, JSON.stringify({
+      score: player.score,
+      email: player.email,
+      name: player.name,
+    }));
   }
 
   colorize(event) {

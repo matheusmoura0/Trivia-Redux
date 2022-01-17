@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { playerAction, tokenAction } from '../../actions';
+import { playerAction, tokenAction, setScore } from '../../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -18,11 +18,12 @@ class Login extends React.Component {
 
   async handleClick() {
     const { history, saveToken, savePlayer } = this.props;
+    // const { player: { score } } = this.props;
     const curr = 'https://opentdb.com/api_token.php?command=request';
     const response = await fetch(curr);
     const json = await response.json();
     localStorage.setItem(localStorage.length + 1, JSON.stringify(json.token));
-
+    // setScores(score: score '-');
     this.setState({
       token: json.token,
     }, () => {
@@ -99,6 +100,7 @@ Login.propTypes = {
 const mapDispatchToProps = (dispacth) => ({
   savePlayer: (payload) => dispacth(playerAction(payload)),
   saveToken: (payload) => dispacth(tokenAction(payload)),
+  setScores: (payload) => dispacth(setScore(payload)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
