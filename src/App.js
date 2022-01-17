@@ -5,11 +5,13 @@ import Login from './components/pages/Login';
 import './App.css';
 import PlayGame from './components/pages/PlayGame';
 import Config from './components/pages/Config';
+import Feedback from './components/pages/Feedback';
 
 export default function App() {
   return (
     <div className="App">
       <Switch>
+        <Route path="/feedback" component={ Feedback } />
         <Route exact path="/" component={ Login } />
         <Route path="/playGame" component={ PlayGame } />
         <Route path="/config" component={ Config } />
