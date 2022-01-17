@@ -35,6 +35,7 @@ class Header extends Component {
           data-testid="header-profile-picture"
           alt="avatarPlayer"
         />
+
       </div>
     );
   }
