@@ -10,6 +10,27 @@ class Header extends Component {
     };
   }
 
+  componentDidMount() {
+    this.tokenExpire();
+  }
+
+  tokenExpire = () => {
+    const expire = 1800000;
+    setInterval(async () => {
+      const { saveToken } = this.props;
+      const curr = 'https://opentdb.com/api_token.php?command=request';
+      const response = await fetch(curr);
+      const json = await response.json();
+      localStorage.setItem('token', JSON.stringify(json.token));
+
+      this.setState({
+        token: json.token,
+      }, () => {
+        saveToken(this.state);
+      });
+    }, expire);
+  }
+
   render() {
     const { player, score } = this.props;
     const MD5 = md5(player.email).toString();
@@ -38,7 +59,6 @@ class Header extends Component {
 const mapStateToProps = (state) => ({
   player: state.player,
   score: state.player.score,
-  assertion: state.player.assertions,
 });
 
 Header.propTypes = {

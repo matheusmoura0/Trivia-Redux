@@ -85,10 +85,15 @@ class PlayGame extends Component {
   }
 
    somaPontos = () => {
-     const { setScores } = this.props;
+     const { setScores, player } = this.props;
      const { seconds } = this.state;
      const points = +'10' + (this.diffNumber() * seconds);
      setScores({ score: points, assertions: 1 });
+     localStorage.setItem(localStorage.length, JSON.stringify({
+       scores: points,
+       email: player.email,
+       name: player.name,
+     }));
    }
 
    stopWatch = (timerzin) => clearInterval(timerzin);
@@ -207,6 +212,7 @@ class PlayGame extends Component {
 const mapStateToProps = (state) => ({
   token: state.token,
   questions: state.player.questions,
+  player: state.player,
 });
 
 const mapDispatchToProps = (dispacth) => ({
@@ -217,6 +223,7 @@ PlayGame.propTypes = {
   token: PropTypes.func.isRequired,
   setScores: PropTypes.func.isRequired,
   history: PropTypes.func.isRequired,
+  player: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlayGame);
