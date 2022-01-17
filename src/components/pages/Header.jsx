@@ -11,7 +11,7 @@ class Header extends Component {
   }
 
   render() {
-    const { player, score, assertion } = this.props;
+    const { player, score } = this.props;
     const MD5 = md5(player.email).toString();
 
     return (
@@ -23,12 +23,6 @@ class Header extends Component {
         </p>
         <p data-testid="header-score">
           {score}
-        </p>
-        <p data-testid="feedback-text">
-          {assertion < +'3'
-            ? 'Could be better...'
-            : 'Well Done!'}
-
         </p>
         <img
           src={ `https://www.gravatar.com/avatar/${MD5}` }
